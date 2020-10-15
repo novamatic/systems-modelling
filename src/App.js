@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.scss';
+import AddChart from './components/addChart/addChart';
 
 function App() {
+  const [charts, setCharts] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <main className="App">
+      <header className="header">
+        <h1>
+          Easy tool to analyse process of calculating parameters for linear
+          function
+        </h1>
       </header>
-    </div>
+      <section className="tool-section">
+        <div className="half-width-section">
+          <AddChart setCharts={setCharts} />
+        </div>
+        <div className="half-width-section">Henlo</div>
+      </section>
+    </main>
   );
 }
 

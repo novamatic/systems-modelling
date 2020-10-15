@@ -1,0 +1,31 @@
+@import './components/addChart/AddChart.scss';
+
+$primary-color: #efefef;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 0 2rem;
+  font-size: 62.5%;
+  background-color: $primary-color;
+}
+
+.header h1 {
+  font-size: 2rem;
+  width: 60%;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.half-width-section {
+  width: 50%;
+}
+
+.tool-section {
+  display: flex;
+  justify-content: space-between;
+}

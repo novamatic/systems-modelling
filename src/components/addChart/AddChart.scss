@@ -1,0 +1,54 @@
+.chart-wrapper {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  font-size: 1.4rem;
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  .parameters-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .field {
+    flex: 1;
+
+    position: relative;
+    padding: 0.5rem;
+
+    input,
+    input:focus,
+    input:active {
+      padding: 0 0.5rem;
+      outline: none;
+      width: 15rem;
+      height: 2rem;
+      background-color: transparent;
+
+      border: 0.2rem solid slateblue;
+      border-radius: 0.4rem;
+    }
+
+    label {
+      position: absolute;
+      font-size: 1rem;
+      top: 15px;
+      left: 20px;
+      background-color: transparent;
+      border-radius: 3px;
+
+      transition: all 200ms;
+    }
+
+    input:focus + label {
+      font-size: 75%;
+      transform: translateY(-1.1rem);
+    }
+  }
+}
