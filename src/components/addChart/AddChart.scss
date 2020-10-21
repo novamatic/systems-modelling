@@ -1,4 +1,6 @@
-.chart-wrapper {
+@import '../../palette.scss';
+
+.add-chart-wrapper {
   flex: 1;
 
   display: flex;
@@ -13,42 +15,63 @@
 
   .parameters-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+
+    .field {
+      position: relative;
+      margin-right: 0.5rem;
+
+      input,
+      input:focus,
+      input:active {
+        padding: 0 0.5rem;
+        outline: none;
+        height: 2rem;
+        background-color: transparent;
+
+        border: 0.2rem solid slateblue;
+        border-radius: 0.4rem;
+      }
+
+      label {
+        z-index: -1;
+        padding: 0 0.2rem;
+        position: absolute;
+        font-size: 1rem;
+        top: 7px;
+        left: 10px;
+        background-color: $primary-color;
+        border-radius: 3px;
+
+        transition: all 200ms;
+      }
+
+      .active-label {
+        z-index: 1000;
+        font-size: 75%;
+        transform: translateY(-1.1rem);
+      }
+    }
   }
 
-  .field {
-    flex: 1;
+  .button {
+    width: 40%;
+    height: 2.5rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 2rem;
+    background-color: transparent;
+    border: 0.2rem solid slateblue;
+    border-radius: 1.5rem;
+    outline: none;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.8);
+    transition: all 0.2s ease;
 
-    position: relative;
-    padding: 0.5rem;
+    &:hover {
+      background-color: slateblue;
+      color: $primary-color;
 
-    input,
-    input:focus,
-    input:active {
-      padding: 0 0.5rem;
-      outline: none;
-      width: 15rem;
-      height: 2rem;
-      background-color: transparent;
-
-      border: 0.2rem solid slateblue;
-      border-radius: 0.4rem;
-    }
-
-    label {
-      position: absolute;
-      font-size: 1rem;
-      top: 15px;
-      left: 20px;
-      background-color: transparent;
-      border-radius: 3px;
-
-      transition: all 200ms;
-    }
-
-    input:focus + label {
-      font-size: 75%;
-      transform: translateY(-1.1rem);
+      transform: translateY(-0.2rem);
     }
   }
 }

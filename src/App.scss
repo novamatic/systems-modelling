@@ -1,6 +1,6 @@
 @import './components/addChart/AddChart.scss';
 
-$primary-color: #efefef;
+@import './palette.scss';
 
 * {
   padding: 0;
@@ -15,17 +15,23 @@ body {
 }
 
 .header h1 {
+  height: 10vh;
   font-size: 2rem;
   width: 60%;
   margin: 2rem auto;
   text-align: center;
 }
 
-.half-width-section {
-  width: 50%;
+.add-chart-section {
+  flex: 2;
+}
+
+.chart-section {
+  flex: 3;
 }
 
 .tool-section {
+  height: 70vh;
   display: flex;
   justify-content: space-between;
 }

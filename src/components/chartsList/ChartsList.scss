@@ -1,0 +1,14 @@
+.charts-grid {
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+
+  gap: 1rem 1rem;
+}
+
+.div-color {
+  background-color: rosybrown;
+}

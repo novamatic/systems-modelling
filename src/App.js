@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.scss';
-import AddChart from './components/addChart/addChart';
+import AddChart from './components/addChart/AddChartComponent';
+import ChartsList from './components/chartsList/ChartsListComponent';
 
 function App() {
   const [charts, setCharts] = useState([]);
@@ -14,10 +15,12 @@ function App() {
         </h1>
       </header>
       <section className="tool-section">
-        <div className="half-width-section">
+        <div className="add-chart-section">
           <AddChart setCharts={setCharts} />
         </div>
-        <div className="half-width-section">Henlo</div>
+        <div className="chart-section">
+          <ChartsList charts={charts} />
+        </div>
       </section>
     </main>
   );
