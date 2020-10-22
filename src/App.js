@@ -19,7 +19,7 @@ function App() {
           <AddChart setCharts={setCharts} />
         </div>
         <div className="chart-section">
-          <ChartsList charts={charts} />
+          <ChartsList charts={charts} setCharts={setCharts} />
         </div>
       </section>
     </main>

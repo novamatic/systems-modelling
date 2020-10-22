@@ -1,0 +1,12 @@
+.chart-legend {
+  margin-left: 3rem;
+}
+
+.remove-chart {
+  color: red;
+  font-size: inherit;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

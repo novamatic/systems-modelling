@@ -7,7 +7,7 @@ import {
   calculateParams,
 } from './chart.service';
 
-const Chart = ({ id, a, b, length, variation }) => {
+const Chart = ({ id, a, b, length, variation, setCharts }) => {
   const chartId = id && `chart${id}`;
   const [UArray, setUArray] = useState([]);
   const [YArray, setYArray] = useState([]);
@@ -52,13 +52,22 @@ const Chart = ({ id, a, b, length, variation }) => {
       });
     }
   }, [chartId, UArray, YArray, length, params]);
+
+  const handleremoveChart = () =>
+    setCharts((prevCharts) =>
+      prevCharts.filter((prevChart) => prevChart.id !== id)
+    );
+
   return (
     <div>
       <div id={chartId} style={{ width: '100%', height: '90%' }}></div>
-      <h3>
+      <h3 className="chart-legend">
         {Object.keys(params).length
-          ? `Len ${length}, Var: ${variation}, A: ${params.a}, B: ${params.b}`
+          ? `Len: ${length}, Var: ${variation},  A: ${params.a},  B: ${params.b}  `
           : null}
+        <span className="remove-chart" onClick={handleremoveChart}>
+          Remove chart
+        </span>
       </h3>
     </div>
   );
