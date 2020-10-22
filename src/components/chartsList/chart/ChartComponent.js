@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import c3 from 'c3';
 
-import { generateUArray, generateYArray } from './chart.service';
+import {
+  generateUArray,
+  generateYArray,
+  calculateParams,
+} from './chart.service';
 
 const Chart = ({ id, a, b, length, variation }) => {
   const chartId = id && `chart${id}`;
   const [UArray, setUArray] = useState([]);
   const [YArray, setYArray] = useState([]);
+  const [params, setParams] = useState({});
 
   useEffect(() => {
     const temp_UArray = generateUArray(length);
     setUArray(temp_UArray);
-    setYArray(generateYArray(length, temp_UArray, variation, a, b));
+    const temp_YArray = generateYArray(length, temp_UArray, variation, a, b);
+    setYArray(temp_YArray);
+    setParams(calculateParams(temp_UArray, temp_YArray));
   }, [a, b, length, variation]);
 
   useEffect(() => {
-    if (UArray.length && YArray.length) {
+    if (UArray.length && YArray.length && Object.keys(params).length) {
+      const lineFirstPoint = params.a + params.b;
+      const lineLastPoint = params.a * length + params.b;
       c3.generate({
         bindto: `#${chartId}`,
         size: {
@@ -24,17 +33,35 @@ const Chart = ({ id, a, b, length, variation }) => {
         data: {
           xs: {
             output: 'input',
+            lineOutput: 'lineInput',
           },
           columns: [
             ['input', ...UArray],
             ['output', ...YArray],
+            ['lineInput', UArray[0], UArray[UArray.length - 1]],
+            ['lineOutput', lineFirstPoint, lineLastPoint],
           ],
           type: 'scatter',
+          types: {
+            lineOutput: 'line',
+          },
+        },
+        legend: {
+          show: false,
         },
       });
     }
-  }, [chartId, UArray, YArray]);
-  return <div id={chartId} style={{ width: '100%', height: '100%' }}></div>;
+  }, [chartId, UArray, YArray, length, params]);
+  return (
+    <div>
+      <div id={chartId} style={{ width: '100%', height: '90%' }}></div>
+      <h3>
+        {Object.keys(params).length
+          ? `Len ${length}, Var: ${variation}, A: ${params.a}, B: ${params.b}`
+          : null}
+      </h3>
+    </div>
+  );
 };
 
 export default Chart;

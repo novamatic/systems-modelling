@@ -52,7 +52,7 @@ function getPow2ArrayValues(arr) {
   return newArr;
 }
 
-export function calculateAParam(U, Y) {
+function calculateAParam(U, Y) {
   return (
     (U.length * sumArray(getProductOfArrays(U, Y)) -
       sumArray(U) * sumArray(Y)) /
@@ -60,6 +60,16 @@ export function calculateAParam(U, Y) {
   );
 }
 
-export function calculateBParam(U, Y, a_param) {
+function calculateBParam(U, Y, a_param) {
   return (sumArray(Y) - a_param * sumArray(U)) / U.length;
+}
+
+export function calculateParams(U, Y) {
+  const a = calculateAParam(U, Y);
+
+  const b = calculateBParam(U, Y, a);
+  return {
+    a: Number(a.toFixed(3)),
+    b: Number(b.toFixed(3)),
+  };
 }
