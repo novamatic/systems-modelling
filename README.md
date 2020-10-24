@@ -1,4 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About app
+
+App made for studies to calculate parameters of linear function, based on random created input and output arrays.
+Deployed on: https://novamatic.github.io/systems-modelling/
 
 ## Available Scripts
 
