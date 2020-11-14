@@ -2,15 +2,15 @@ function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function outputOfLinearFunction(input, a_param, b_param) {
-  return a_param * input + b_param;
+function outputOfLinearFunction(input, aParam, bParam) {
+  return aParam * input + bParam;
 }
 
 function sumArray(arr) {
   return arr.reduce((sum, val) => sum + val, 0);
 }
 
-export function generateUArray(length) {
+function generateUArray(length) {
   const u_arr = [];
 
   for (let i = 0; i < length; i++) {
@@ -20,20 +20,18 @@ export function generateUArray(length) {
   return u_arr;
 }
 
-export function generateYArray(length, UArray, variation, idealA, idealB) {
-  const y_arr = [];
-
-  for (let i = 0; i < length; i++) {
-    const exactOutputValue = outputOfLinearFunction(UArray[i], idealA, idealB);
-    y_arr.push(
-      getRandomInRange(
-        exactOutputValue - variation,
-        exactOutputValue + variation
-      )
-    );
+function generateIdealYArray(UArray, idealA, idealB) {
+  const newArr = [];
+  for (let i = 0; i < UArray.length; i++) {
+    newArr.push(outputOfLinearFunction(UArray[i], idealA, idealB));
   }
+  return newArr;
+}
 
-  return y_arr;
+export function calculateModelYArray(idealYArray, variation) {
+  return idealYArray.map((idealY) =>
+    getRandomInRange(idealY - variation, idealY + variation)
+  );
 }
 
 function getProductOfArrays(arr1, arr2) {
@@ -64,12 +62,43 @@ function calculateBParam(U, Y, a_param) {
   return (sumArray(Y) - a_param * sumArray(U)) / U.length;
 }
 
-export function calculateParams(U, Y) {
+function calculateParams(U, Y) {
   const a = calculateAParam(U, Y);
 
   const b = calculateBParam(U, Y, a);
   return {
-    a: Number(a.toFixed(3)),
-    b: Number(b.toFixed(3)),
+    modelAParam: Number(a.toFixed(3)),
+    modelBParam: Number(b.toFixed(3)),
   };
+}
+
+function calculateIdentificationQuality(idealYArray, modelYArray) {
+  const newArr = [];
+
+  for (let i = 0; i < idealYArray.length; i++) {
+    newArr.push(Math.pow(idealYArray[i] - modelYArray[i], 2));
+  }
+
+  return Number((sumArray(newArr) / idealYArray.length).toFixed(3));
+}
+
+export function calculateModelElements(idealA, idealB, length, variation) {
+  const UArray = generateUArray(length);
+  const idealYArray = generateIdealYArray(UArray, idealA, idealB);
+  const modelYArray = calculateModelYArray(idealYArray, variation);
+  const identificationQuality = calculateIdentificationQuality(
+    idealYArray,
+    modelYArray
+  );
+  const { modelAParam, modelBParam } = calculateParams(UArray, modelYArray);
+
+  const returnObj = {
+    UArray,
+    modelYArray,
+    modelAParam,
+    modelBParam,
+    identificationQuality,
+  };
+
+  return returnObj;
 }

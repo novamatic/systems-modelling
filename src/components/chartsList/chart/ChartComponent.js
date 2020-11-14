@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import c3 from 'c3';
 
-import {
-  generateUArray,
-  generateYArray,
-  calculateParams,
-} from './chart.service';
+import { calculateModelElements } from './chart.service';
 
 const Chart = ({ id, a, b, length, variation, setCharts }) => {
   const chartId = id && `chart${id}`;
@@ -14,17 +10,23 @@ const Chart = ({ id, a, b, length, variation, setCharts }) => {
   const [params, setParams] = useState({});
 
   useEffect(() => {
-    const temp_UArray = generateUArray(length);
-    setUArray(temp_UArray);
-    const temp_YArray = generateYArray(length, temp_UArray, variation, a, b);
-    setYArray(temp_YArray);
-    setParams(calculateParams(temp_UArray, temp_YArray));
+    const {
+      UArray,
+      modelYArray,
+      modelAParam,
+      modelBParam,
+      identificationQuality,
+    } = calculateModelElements(a, b, length, variation);
+
+    setUArray(UArray);
+    setYArray(modelYArray);
+    setParams({ modelAParam, modelBParam, identificationQuality });
   }, [a, b, length, variation]);
 
   useEffect(() => {
     if (UArray.length && YArray.length && Object.keys(params).length) {
-      const lineFirstPoint = params.a + params.b;
-      const lineLastPoint = params.a * length + params.b;
+      const lineFirstPoint = params.modelAParam + params.modelBParam;
+      const lineLastPoint = params.modelAParam * length + params.modelBParam;
       c3.generate({
         bindto: `#${chartId}`,
         size: {
@@ -63,7 +65,7 @@ const Chart = ({ id, a, b, length, variation, setCharts }) => {
       <div id={chartId} style={{ width: '100%', height: '90%' }}></div>
       <h3 className="chart-legend">
         {Object.keys(params).length
-          ? `Len: ${length}, Var: ${variation},  A: ${params.a},  B: ${params.b}  `
+          ? `Len: ${length}, Var: ${variation},  A: ${params.modelAParam},  B: ${params.modelBParam},  Q: ${params.identificationQuality} `
           : null}
         <span className="remove-chart" onClick={handleremoveChart}>
           Remove chart
